@@ -1,0 +1,19 @@
+.drawer {
+  width: 0px;
+  height: 100%;
+  padding-top: 20px;
+  background-color: yellow;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  transition: all 0.3s linear;
+}
+
+.drawer-open {
+  width: 550px;
+}
+
+.drawer-open-mobile {
+  width: 100%;
+}
