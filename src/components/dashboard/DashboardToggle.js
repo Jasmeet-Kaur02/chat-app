@@ -2,27 +2,25 @@ import React from "react";
 import { Button, Icon } from "rsuite";
 import Dashboard from "./index.js";
 import { useModalState } from "../../misc/custom-hooks";
-import "../../styles/DrawerStyle.scss";
-import classname from "classnames";
+import { auth } from "../../misc/firebase.js";
+import Drawer from "@material-ui/core/Drawer";
 
 const DashboardToggle = () => {
   const [isOpen, open, close] = useModalState(false);
-  const isMobile = window.screen.width < 992 ? true : false;
 
-  const drawer = classname("drawer", {
-    "drawer-open": isOpen && !isMobile,
-    "drawer-open-mobile": isOpen && isMobile,
-  });
-  console.log(isMobile);
+  const onSignOut = () => {
+    auth.signOut();
+    close();
+  };
   return (
     <>
       <Button block color="blue" onClick={open}>
         <Icon icon="dashboard" /> Dashboard
       </Button>
 
-      <div className={drawer} onClick={close}>
-        <Dashboard />
-      </div>
+      <Drawer anchor="left" open={isOpen} onClose={close} variant="temporary">
+        <Dashboard close={close} onSignOut={onSignOut} />
+      </Drawer>
     </>
   );
 };

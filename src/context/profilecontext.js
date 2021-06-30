@@ -18,8 +18,8 @@ export function ProfileProvider({ children }) {
           const data = {
             name,
             createdAt,
-            uid: auth.uid,
-            email: auth.email,
+            uid: authObj.uid,
+            email: authObj.email,
           };
           setProfile(data);
         });

@@ -1,19 +1,49 @@
-.drawer {
-  width: 0px;
+.header {
+  padding: 10px 20px;
   height: 100%;
-  padding-top: 20px;
-  background-color: yellow;
+}
+
+.body {
+  margin-top: 10px;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.email {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.inputLabel {
+  display: flex;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.infoBox {
+  box-shadow: 1px 2px 4px grey;
+  width: 200px;
+  height: 150px;
+  transition: all 0.5s linear;
+  margin-left: 50px;
+  padding: 20px;
+}
+
+.Modal {
+  background-color: white;
   position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
-  transition: all 0.3s linear;
+  top: 160px;
+  left: 160px;
+  font-size: 20px;
+  padding: 20px;
+  width: 450px;
+  height: 320px;
 }
-
-.drawer-open {
-  width: 550px;
-}
-
-.drawer-open-mobile {
-  width: 100%;
+.Modal div {
+  display: flex;
+  justify-content: space-between;
 }
