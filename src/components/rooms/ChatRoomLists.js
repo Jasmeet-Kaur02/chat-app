@@ -1,8 +1,13 @@
 import React from "react";
-import { Nav } from "rsuite";
+import { Nav, Loader } from "rsuite";
 import ChatRoomItems from "./ChatRoomItems";
+import { useRoomsContext } from "../../context/roomsContext";
+import { Link, useLocation } from "react-router-dom";
 
 const ChatRoomLists = ({ topSidebarHeight }) => {
+  const rooms = useRoomsContext();
+  const location = useLocation();
+  console.log(rooms);
   return (
     <Nav
       appearance="subtle"
@@ -12,10 +17,25 @@ const ChatRoomLists = ({ topSidebarHeight }) => {
       style={{
         height: `calc(100% - ${topSidebarHeight}px )`,
       }}
+      activeKey={location.pathname}
     >
-      <Nav.Item>
-        <ChatRoomItems />
-      </Nav.Item>
+      {!rooms && (
+        <Loader center vertical size="md" sped="slow" content="Loading" />
+      )}
+      {rooms &&
+        rooms.length > 0 &&
+        rooms.map((room) => {
+          return (
+            <Nav.Item
+              key={room.id}
+              componentClass={Link}
+              to={`/chat/${room.id}`}
+              eventKey={`/chat/${room.id}`}
+            >
+              <ChatRoomItems room={room} />
+            </Nav.Item>
+          );
+        })}
     </Nav>
   );
 };

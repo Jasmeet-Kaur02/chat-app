@@ -1,7 +1,7 @@
 import "./styles/main.scss";
 import { Switch } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-import Home from "./pages/Home";
+import Home from "./pages/Home/index";
 import SignIn from "./pages/SignIn";
 import PublicRoute from "./components/PublicRoute";
 import "rsuite/dist/styles/rsuite-default.css";
@@ -14,7 +14,7 @@ function App() {
         <PublicRoute path="/signin">
           <SignIn />
         </PublicRoute>
-        <PrivateRoute exact path="/">
+        <PrivateRoute path="/">
           <Home />
         </PrivateRoute>
       </Switch>

@@ -35,6 +35,7 @@ export function ProfileProvider({ children }) {
 
     return () => {
       authUnsub();
+      userRef.off();
     };
   }, []);
 

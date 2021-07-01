@@ -1,8 +1,7 @@
-import transitions from "@material-ui/core/styles/transitions";
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { database } from "../misc/firebase";
 
-const RoomsContext = React.createContext();
+export const RoomsContext = React.createContext();
 
 const transformToArray = (roomsObj) => {
   return roomsObj
@@ -12,7 +11,7 @@ const transformToArray = (roomsObj) => {
     : [];
 };
 
-function RoomsProvider({ children }) {
+export function RoomsProvider({ children }) {
   const [rooms, setRooms] = React.useState(null);
 
   useEffect(() => {
@@ -20,13 +19,17 @@ function RoomsProvider({ children }) {
 
     roomsRef.on("value", (snap) => {
       const data = transformToArray(snap.val());
-      console.log(data);
+      setRooms(data);
     });
-  });
+
+    return () => {
+      roomsRef.off();
+    };
+  }, []);
 
   return (
     <RoomsContext.Provider value={rooms}>{children}</RoomsContext.Provider>
   );
 }
 
-export default RoomsProvider;
+export const useRoomsContext = () => useContext(RoomsContext);
