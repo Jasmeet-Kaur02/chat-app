@@ -2,18 +2,19 @@ import React from "react";
 import { Grid, Row, Col } from "rsuite";
 import Sidebar from "../components/Sidebar";
 import "../styles/DrawerStyle.scss";
+import RoomsProvider from "../context/roomsContext";
 
 function Home() {
   return (
-    <>
+    <RoomsProvider>
       <Grid fluid className="h-100">
-        <Row>
-          <Col xs={24} md={8}>
+        <Row className="h-100">
+          <Col xs={24} md={8} className="h-100">
             <Sidebar />
           </Col>
         </Row>
       </Grid>
-    </>
+    </RoomsProvider>
   );
 }
 
