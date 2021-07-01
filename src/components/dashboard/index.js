@@ -61,10 +61,9 @@ const Dashboard = ({ close, onSignOut }) => {
 
         <div>
           <EditableInput initialValue={profile.name} onSave={onSave} />
+          <AvatarUploadBtn closeDashboard={close} />
         </div>
       </div>
-
-      <AvatarUploadBtn closeDashboard={close} />
 
       <div
         className="infoBox"
