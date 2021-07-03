@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useCurrentRoom } from "../../context/currentRoomContext";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "../../misc/custom-hooks";
@@ -14,7 +14,7 @@ const ChatTop = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-center">
-        <h4>
+        <h4 className="text-disappear d-flex align-items-center">
           <span
             className={
               isMobile ? "d-inline-block p-0 mr-2 link-unstyled" : "d-none"
@@ -28,11 +28,11 @@ const ChatTop = () => {
       </div>
 
       <div className="d-flex justify-content-between align-items-center">
-        <Button>todo</Button>
+        <Button className="px-0">todo</Button>
         <RoomInfoBtnModal />
       </div>
     </>
   );
 };
 
-export default ChatTop;
+export default memo(ChatTop);

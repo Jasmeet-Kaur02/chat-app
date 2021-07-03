@@ -1,7 +1,12 @@
 import React from "react";
+import MessageInput from "./MessageInput";
 
 const ChatBottom = () => {
-  return <div>Bottom</div>;
+  return (
+    <>
+      <MessageInput />
+    </>
+  );
 };
 
 export default ChatBottom;

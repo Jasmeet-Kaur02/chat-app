@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   },
 });
 
-const getName = (name) => {
+export const getName = (name) => {
   const splitName = name.toUpperCase().split(" ");
 
   if (splitName.length > 1) {
@@ -23,11 +23,7 @@ const ProfileAvatar = ({ name, profileImg }) => {
   const classes = useStyles();
 
   return (
-    <Avatar
-      alt="this is profile image of you"
-      src={profileImg}
-      className={classes.avatar}
-    >
+    <Avatar src={profileImg} className={classes.avatar}>
       {getName(name)}
     </Avatar>
   );

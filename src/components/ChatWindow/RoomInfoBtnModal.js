@@ -18,12 +18,11 @@ const RoomInfoBtnModal = () => {
       <Modal open={isOpen} onClose={close}>
         <div className="Modal">
           <div className="d-flex justify-content-between align-items-center">
-            <h4>About {name}</h4>
+            <h5>About {name}</h5>
             <Icon icon="close" onClick={close} />
           </div>
-
-          <h4>Description</h4>
-          <div className="mt-2">{description}</div>
+          <h5 className="mt-2">Description</h5>
+          <p className="text-disappear mt-2">{description}</p>
         </div>
       </Modal>
     </>
