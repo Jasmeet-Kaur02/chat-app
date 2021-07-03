@@ -32,4 +32,4 @@ export function RoomsProvider({ children }) {
   );
 }
 
-export const useRoomsContext = () => useContext(RoomsContext);
+export const useRooms = () => useContext(RoomsContext);

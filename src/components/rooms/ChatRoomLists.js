@@ -1,11 +1,11 @@
 import React from "react";
 import { Nav, Loader } from "rsuite";
 import ChatRoomItems from "./ChatRoomItems";
-import { useRoomsContext } from "../../context/roomsContext";
+import { useRooms } from "../../context/roomsContext";
 import { Link, useLocation } from "react-router-dom";
 
 const ChatRoomLists = ({ topSidebarHeight }) => {
-  const rooms = useRoomsContext();
+  const rooms = useRooms();
   const location = useLocation();
   console.log(rooms);
   return (

@@ -7,7 +7,7 @@ function PrivateRoute({ children, ...routeProp }) {
   const { profile, isLoading } = useProfile();
 
   if (isLoading && !profile) {
-    return <Loader center vertical size="md" sped="slow" content="Loading" />;
+    return <Loader center vertical size="md" speed="slow" content="Loading" />;
   }
 
   if (!profile && !isLoading) {
