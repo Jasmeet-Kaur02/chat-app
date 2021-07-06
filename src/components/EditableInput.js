@@ -1,7 +1,5 @@
 import React from "react";
 import EditIcon from "@material-ui/icons/EditOutlined";
-//import CheckIcon from "@material-ui/icons/CheckRounded";
-//import ClearIcon from "@material-ui/icons/ClearRounded";
 import { Icon, Alert } from "rsuite";
 import { InputBase, FormGroup } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-const EditableInput = ({ initialValue, onSave }) => {
+const EditableInput = ({ initialValue, onSave, label }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(initialValue);
   const [isEditable, setEditable] = React.useState(false);
@@ -50,7 +48,7 @@ const EditableInput = ({ initialValue, onSave }) => {
   return (
     <>
       <div className="inputLabel">
-        <label>Name</label>
+        <label>{label}</label>
         <EditIcon
           className={classes.editBtn}
           onClick={() => setEditable(true)}

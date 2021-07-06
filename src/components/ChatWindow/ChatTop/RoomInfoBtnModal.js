@@ -14,7 +14,7 @@ const RoomInfoBtnModal = () => {
         Room Information
       </Button>
 
-      <Modal open={isOpen} onClose={close}>
+      <Modal show={isOpen} onHide={close}>
         <Modal.Header>
           <Modal.Title>
             <div className="d-flex justify-content-between align-items-center">

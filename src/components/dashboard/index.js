@@ -37,12 +37,16 @@ const Dashboard = ({ close, onSignOut }) => {
           <p>{profile.email} </p>
         </div>
         <Divider />
-        <EditableInput initialValue={profile.name} onSave={onSave} />
+        <EditableInput
+          initialValue={profile.name}
+          onSave={onSave}
+          label="Name"
+        />
         <AvatarUploadBtn closeDashboard={close} />
       </Drawer.Body>
 
       <Drawer.Footer>
-        <div className="mb-1">
+        <div className="mb-2">
           <Button block color="red" onClick={onSignOut}>
             Sign Out
           </Button>
