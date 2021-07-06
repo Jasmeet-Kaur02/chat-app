@@ -8,8 +8,8 @@ import {
   Form,
   Schema,
   Alert,
+  Modal,
 } from "rsuite";
-import { Modal } from "@material-ui/core";
 import "../styles/DrawerStyle.scss";
 import { useModalState } from "../misc/custom-hooks";
 import { database } from "../misc/firebase";
@@ -69,12 +69,12 @@ const CreateRoomBtnModal = () => {
         <Icon icon="creative" /> Create new room
       </Button>
 
-      <Modal open={isOpen} onClose={close}>
-        <div className="Modal">
-          <div className="title mb-2">
-            New Chat Room
-            <Icon icon="close" onClick={close} />
-          </div>
+      <Modal show={isOpen} onHide={close}>
+        <Modal.Header>
+          <Modal.Title>New Chat Room</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
           <Form
             fluid
             formValue={formData}
@@ -97,12 +97,13 @@ const CreateRoomBtnModal = () => {
               />
             </FormGroup>
           </Form>
-          <div className="mt-2">
-            <Button block color="blue" onClick={onSubmit} disabled={isLoading}>
-              Create Room
-            </Button>
-          </div>
-        </div>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button block color="blue" onClick={onSubmit} disabled={isLoading}>
+            Create Room
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );

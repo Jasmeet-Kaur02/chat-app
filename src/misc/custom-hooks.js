@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import { database } from "./firebase";
 
 export function useModalState(defaultVal = false) {
   const [isOpen, setOpen] = useState(defaultVal);
@@ -25,4 +26,24 @@ export const useMediaQuery = (query) => {
   }, [query]);
 
   return match;
+};
+
+export const usePresence = (uid) => {
+  const [presence, setPresence] = useState(null);
+
+  useEffect(() => {
+    const userStatusRef = database.ref(`/status/${uid}`);
+    userStatusRef.on("value", (snap) => {
+      if (snap.exists()) {
+        const data = snap.val();
+        setPresence(data);
+      }
+    });
+
+    return () => {
+      userStatusRef.off();
+    };
+  }, [uid]);
+
+  return presence;
 };

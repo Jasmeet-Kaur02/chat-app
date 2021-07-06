@@ -1,13 +1,13 @@
 import React from "react";
 import { Alert, InputGroup, Input, Icon } from "rsuite";
 import { useParams } from "react-router";
-import { useProfile } from "../../context/profilecontext";
+import { useProfile } from "../../../context/profilecontext";
 import firebase from "firebase/app";
-import { database } from "../../misc/firebase";
+import { database } from "../../../misc/firebase";
 
 const assembleMessage = (profile, chatId) => {
   return {
-    chatId: chatId,
+    roomId: chatId,
     author: {
       name: profile.name,
       uid: profile.uid,

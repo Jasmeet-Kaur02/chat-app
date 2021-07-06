@@ -20,7 +20,6 @@
 
 .inputLabel {
   display: flex;
-  margin-top: 10px;
   font-size: 20px;
 }
 
@@ -37,10 +36,18 @@
   background-color: white;
   position: absolute;
   border-radius: 8px;
-  top: 160px;
-  left: 160px;
+  top: 50px;
+  left: 100px; //350px
   font-size: 20px;
   padding: 20px;
-  width: 450px;
-  height: 360px;
+  width: 400px; //450
+  height: 300px; //360
+}
+
+.Modal-tab {
+  left: 250px;
+}
+
+.Modal-mobile {
+  left: 200px;
 }

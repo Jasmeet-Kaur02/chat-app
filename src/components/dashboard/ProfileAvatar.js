@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
+import { getName } from "../../misc/helperFunctions";
 
 const useStyles = makeStyles({
   avatar: {
@@ -9,15 +10,6 @@ const useStyles = makeStyles({
     fontSize: "70px",
   },
 });
-
-export const getName = (name) => {
-  const splitName = name.toUpperCase().split(" ");
-
-  if (splitName.length > 1) {
-    return splitName[0][0] + splitName[1][0];
-  }
-  return splitName[0][0];
-};
 
 const ProfileAvatar = ({ name, profileImg }) => {
   const classes = useStyles();

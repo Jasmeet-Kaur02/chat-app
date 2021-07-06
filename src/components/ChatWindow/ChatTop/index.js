@@ -1,9 +1,9 @@
 import React, { memo } from "react";
-import { useCurrentRoom } from "../../context/currentRoomContext";
+import { useCurrentRoom } from "../../../context/currentRoomContext";
 import { Link } from "react-router-dom";
-import { useMediaQuery } from "../../misc/custom-hooks";
+import { useMediaQuery } from "../../../misc/custom-hooks";
 import { Icon, Button } from "rsuite";
-import "../../styles/utility.scss";
+import "../../../styles/utility.scss";
 import RoomInfoBtnModal from "./RoomInfoBtnModal";
 
 const ChatTop = () => {

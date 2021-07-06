@@ -2,7 +2,7 @@ import React from "react";
 import EditIcon from "@material-ui/icons/EditOutlined";
 //import CheckIcon from "@material-ui/icons/CheckRounded";
 //import ClearIcon from "@material-ui/icons/ClearRounded";
-import { Icon } from "rsuite";
+import { Icon, Alert } from "rsuite";
 import { InputBase, FormGroup } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "../styles/DrawerStyle.scss";
@@ -16,7 +16,6 @@ const useStyles = makeStyles({
   },
   input: {
     border: "none",
-    marginTop: "15px",
     paddingLeft: "5px",
     borderRadius: "4px",
   },
@@ -24,7 +23,6 @@ const useStyles = makeStyles({
 
 const EditableInput = ({ initialValue, onSave }) => {
   const classes = useStyles();
-  const [error, setError] = React.useState(null);
   const [value, setValue] = React.useState(initialValue);
   const [isEditable, setEditable] = React.useState(false);
 
@@ -35,19 +33,17 @@ const EditableInput = ({ initialValue, onSave }) => {
   const onCancel = () => {
     setValue(initialValue);
     setEditable(false);
-    setError(null);
   };
 
   const onCheck = async () => {
     const trimmed = value.trim();
 
     if (trimmed === "") {
-      setError("you must specify your name");
+      Alert.info("you must specify your name");
       return;
     }
     if (trimmed !== initialValue) {
       await onSave(trimmed);
-      setError(null);
     }
     setEditable(false);
   };
@@ -66,12 +62,19 @@ const EditableInput = ({ initialValue, onSave }) => {
           value={value}
           onChange={inputChange}
           endAdornment={[
-            <Icon icon="close" style={closeBtn} onClick={onCancel} />,
-            <Icon icon="check" style={checkBtn} onClick={onCheck} />,
+            <Icon
+              icon="close"
+              style={isEditable ? closeBtn : hide}
+              onClick={onCancel}
+            />,
+            <Icon
+              icon="check"
+              style={isEditable ? checkBtn : hide}
+              onClick={onCheck}
+            />,
           ]}
         />
       </FormGroup>
-      <p className="inputErrorMsg">{error}</p>
     </>
   );
 };
@@ -79,16 +82,24 @@ const EditableInput = ({ initialValue, onSave }) => {
 export default EditableInput;
 
 const closeBtn = {
-  backgroundColor: "#f1f1f1",
-  padding: "8px",
+  //backgroundColor: "#f1f1f1",
+  fontSize: "15px",
+  color: "black",
+  padding: "9px",
   borderRadius: "2px",
   cursor: "pointer",
 };
 
 const checkBtn = {
-  backgroundColor: "#f1f1f1",
+  //backgroundColor: "#f1f1f1",
+  fontSize: "15px",
+  color: "black",
   marginLeft: "1px",
   padding: "8px",
   borderRadius: "2px",
   cursor: "pointer",
+};
+
+const hide = {
+  display: "none",
 };

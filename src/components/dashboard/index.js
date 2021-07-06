@@ -1,80 +1,53 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useProfile } from "../../context/profilecontext";
-import { Button, Divider } from "@material-ui/core";
+import { Button, Drawer, Divider, Icon, Alert } from "rsuite";
 import "../../styles/DrawerStyle.scss";
-import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@material-ui/core/styles";
-import MailIcon from "@material-ui/icons/MailOutline";
 import EditableInput from "../EditableInput";
 import { database } from "../../misc/firebase";
 import AvatarUploadBtn from "./AvatarUploadBtn";
-
-const useStyles = makeStyles({
-  signOutBtn: {
-    backgroundColor: "orange",
-    color: "white",
-    margin: "10px 20px",
-    "&:hover": {
-      backgroundColor: "orange",
-    },
-  },
-  mail: {
-    marginRight: "10px",
-  },
-});
+import { getUpdates } from "../../misc/helperFunctions";
 
 const Dashboard = ({ close, onSignOut }) => {
   const { profile } = useProfile();
-  const [info, setInfo] = React.useState(null);
-  const classes = useStyles();
-
-  useEffect(() => {
-    setTimeout(() => {
-      setInfo(null);
-    }, 5000);
-  }, [info]);
 
   const onSave = async (savedValue) => {
-    const userRef = database.ref(`/profiles/${profile.uid}`).child("name");
     try {
-      await userRef.set(savedValue);
-      setInfo("your Name has been changed");
+      const updates = await getUpdates(
+        profile.uid,
+        "name",
+        savedValue,
+        database
+      );
+      await database.ref().update(updates);
+      Alert.success("name has been changed");
     } catch (error) {
-      setInfo(error.message);
+      Alert.error(error.message);
     }
   };
   return (
     <>
-      <div className="header">
-        <div className="title">
-          Dashboard
-          <CloseIcon onClick={close} />
+      <Drawer.Header>
+        <Drawer.Title>Dashboard</Drawer.Title>
+      </Drawer.Header>
+
+      <Drawer.Body>
+        <h4>Hey {profile.name}</h4>
+        <div className="d-flex">
+          <Icon icon="envelope-o" className="mr-2" size="lg" />
+          <p>{profile.email} </p>
         </div>
+        <Divider />
+        <EditableInput initialValue={profile.name} onSave={onSave} />
+        <AvatarUploadBtn closeDashboard={close} />
+      </Drawer.Body>
 
-        <div className="body">
-          <h4>Hey {profile.name}</h4>
-          <div className="email">
-            <MailIcon className={classes.mail} /> <p>{profile.email} </p>
-          </div>
-          <Divider />
+      <Drawer.Footer>
+        <div className="mb-1">
+          <Button block color="red" onClick={onSignOut}>
+            Sign Out
+          </Button>
         </div>
-
-        <div>
-          <EditableInput initialValue={profile.name} onSave={onSave} />
-          <AvatarUploadBtn closeDashboard={close} />
-        </div>
-      </div>
-
-      <div
-        className="infoBox"
-        style={{ transform: info ? "translateX(0px)" : "translateX(-270px)" }}
-      >
-        <p>{info}</p>
-      </div>
-
-      <Button className={classes.signOutBtn} onClick={onSignOut}>
-        Sign Out
-      </Button>
+      </Drawer.Footer>
     </>
   );
 };

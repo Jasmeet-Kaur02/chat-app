@@ -1,9 +1,8 @@
 import React from "react";
-import { Button, Icon } from "rsuite";
-import { useCurrentRoom } from "../../context/currentRoomContext";
-import { useModalState } from "../../misc/custom-hooks";
-import "../../styles/DrawerStyle.scss";
-import { Modal } from "@material-ui/core";
+import { Button, Modal } from "rsuite";
+import { useCurrentRoom } from "../../../context/currentRoomContext";
+import { useModalState } from "../../../misc/custom-hooks";
+import "../../../styles/DrawerStyle.scss";
 
 const RoomInfoBtnModal = () => {
   const description = useCurrentRoom((v) => v.description);
@@ -16,14 +15,18 @@ const RoomInfoBtnModal = () => {
       </Button>
 
       <Modal open={isOpen} onClose={close}>
-        <div className="Modal">
-          <div className="d-flex justify-content-between align-items-center">
-            <h5>About {name}</h5>
-            <Icon icon="close" onClick={close} />
-          </div>
+        <Modal.Header>
+          <Modal.Title>
+            <div className="d-flex justify-content-between align-items-center">
+              <h5>About {name}</h5>
+            </div>
+          </Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
           <h5 className="mt-2">Description</h5>
           <p className="text-disappear mt-2">{description}</p>
-        </div>
+        </Modal.Body>
       </Modal>
     </>
   );

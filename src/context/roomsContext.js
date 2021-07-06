@@ -1,15 +1,8 @@
 import React, { useEffect, useContext } from "react";
 import { database } from "../misc/firebase";
+import { transformToArray } from "../misc/helperFunctions";
 
 export const RoomsContext = React.createContext();
-
-const transformToArray = (roomsObj) => {
-  return roomsObj
-    ? Object.keys(roomsObj).map((roomId) => {
-        return { ...roomsObj[roomId], id: roomId };
-      })
-    : [];
-};
 
 export function RoomsProvider({ children }) {
   const [rooms, setRooms] = React.useState(null);

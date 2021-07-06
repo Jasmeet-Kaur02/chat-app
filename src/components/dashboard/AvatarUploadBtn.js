@@ -1,12 +1,12 @@
 import React from "react";
-import { Alert, Icon, Button } from "rsuite";
+import { Alert, Modal, Button } from "rsuite";
 import { useModalState } from "../../misc/custom-hooks";
-import { Modal } from "@material-ui/core";
 import "../../styles/DrawerStyle.scss";
 import AvatarEditor from "react-avatar-editor";
 import { storage, database } from "../../misc/firebase";
 import { useProfile } from "../../context/profilecontext";
 import ProfileAvatar from "./ProfileAvatar";
+import { getUpdates } from "../../misc/helperFunctions";
 
 const fileInputType = ".png, .jpeg, .jpg";
 const acceptedType = ["image/png", "image/pjpeg", "image/jpeg"];
@@ -59,15 +59,17 @@ const AvatarUploadBtn = ({ closeDashboard }) => {
       const uploadAvatarResult = await avatarFileRef.put(blob, {
         cacheControl: `public, max-age=${3600 * 24 * 3}`,
       });
-      console.log(uploadAvatarResult);
 
       const downloadUrl = await uploadAvatarResult.ref.getDownloadURL();
 
-      const databaseRef = database
-        .ref(`/profiles/${profile.uid}`)
-        .child("avatar");
-
-      await databaseRef.set(downloadUrl);
+      const updates = await getUpdates(
+        profile.uid,
+        "avatar",
+        downloadUrl,
+        database
+      );
+      console.log(updates);
+      await database.ref().update(updates);
 
       Alert.info("image uploaded", 6000);
 
@@ -97,14 +99,13 @@ const AvatarUploadBtn = ({ closeDashboard }) => {
         </div>
       </div>
 
-      <Modal open={isOpen} onClose={close}>
-        <div className="Modal">
-          <div className="d-flex justify-content-between mb-2">
-            <p>Adjust and upload image</p>
-            <Icon icon="close" onClick={close} />
-          </div>
+      <Modal show={isOpen} onHide={close}>
+        <Modal.Header>
+          <Modal.Title>Adjust and upload image</Modal.Title>
+        </Modal.Header>
 
-          <div className="d-flex justify-content-center mb-2">
+        <Modal.Body>
+          <div className="d-flex justify-content-center align-items-center">
             {img && (
               <AvatarEditor
                 ref={AvatarRef}
@@ -117,11 +118,19 @@ const AvatarUploadBtn = ({ closeDashboard }) => {
               />
             )}
           </div>
+        </Modal.Body>
 
-          <Button block color="blue" onClick={onUpload} disabled={isLoading}>
+        <Modal.Footer>
+          <Button
+            block
+            color="blue"
+            appearance="ghost"
+            onClick={onUpload}
+            disabled={isLoading}
+          >
             Upload
           </Button>
-        </div>
+        </Modal.Footer>
       </Modal>
     </>
   );

@@ -9,7 +9,6 @@ import { useMediaQuery } from "../../misc/custom-hooks";
 
 function Home() {
   const isDesktop = useMediaQuery("(min-width : 992px )");
-  console.log(isDesktop);
   const { isExact } = useRouteMatch();
 
   const canRenderSidebar = isDesktop || isExact;
