@@ -9,8 +9,8 @@ import EditRoomBtnDrawer from "./EditRoomBtnDrawer";
 
 const ChatTop = () => {
   const name = useCurrentRoom((v) => v.name);
+  const isAdmin = useCurrentRoom((v) => v.isAdmin);
   const isMobile = useMediaQuery("(max-width: 992px)");
-  console.log(isMobile);
 
   return (
     <>
@@ -27,7 +27,8 @@ const ChatTop = () => {
           </span>
           <span>{name}</span>
         </h4>
-        <EditRoomBtnDrawer />
+
+        {isAdmin && <EditRoomBtnDrawer />}
       </div>
 
       <div className="d-flex justify-content-between align-items-center">

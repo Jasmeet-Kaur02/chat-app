@@ -6,6 +6,8 @@ import { useRooms } from "../../context/roomsContext";
 import { Loader } from "rsuite";
 import { useParams } from "react-router-dom";
 import { CurrentRoomProvider } from "../../context/currentRoomContext";
+import { auth } from "../../misc/firebase";
+import { adminsArray } from "../../misc/helperFunctions";
 
 const Chat = () => {
   const { chatId } = useParams();
@@ -23,9 +25,14 @@ const Chat = () => {
 
   const { name, description } = currentRoom;
 
+  const admins = adminsArray(currentRoom.admins);
+  const isAdmin = admins.includes(auth.currentUser.uid);
+
   const currentRoomData = {
     name,
     description,
+    admins,
+    isAdmin,
   };
 
   return (

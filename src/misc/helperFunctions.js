@@ -15,6 +15,10 @@ export const transformToArray = (roomsObj) => {
     : [];
 };
 
+export const adminsArray = (snap) => {
+  return snap ? Object.keys(snap) : [];
+};
+
 export const getUpdates = async (updateId, keyToUpdate, newValue, db) => {
   const updates = {};
 
