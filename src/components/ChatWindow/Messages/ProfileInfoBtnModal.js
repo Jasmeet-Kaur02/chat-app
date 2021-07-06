@@ -14,7 +14,7 @@ const useStyles = makeStyles({
 
 const memberSince = (createdAt) => new Date(createdAt).toLocaleDateString();
 
-const ProfileInfoBtnModal = ({ profile }) => {
+const ProfileInfoBtnModal = ({ profile, children }) => {
   const classes = useStyles();
 
   const [isOpen, open, close] = useModalState(false);
@@ -45,6 +45,7 @@ const ProfileInfoBtnModal = ({ profile }) => {
         </Modal.Body>
 
         <Modal.Footer>
+          {children}
           <Button block onClick={close}>
             Close
           </Button>
