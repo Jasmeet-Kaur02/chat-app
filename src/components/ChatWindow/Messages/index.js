@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { transformToArray } from "../../../misc/helperFunctions";
 import MessageItems from "./MessageItems";
-import { database } from "../../../misc/firebase";
+import { database, auth } from "../../../misc/firebase";
 import "../../../styles/utility.scss";
 import { Alert } from "rsuite";
 
@@ -49,6 +49,59 @@ const Messages = () => {
     [chatId]
   );
 
+  const handleLikes = useCallback(async (msgId) => {
+    const { uid } = auth.currentUser;
+    const msgRef = database.ref(`/messages/${msgId}`);
+
+    await msgRef.transaction((msg) => {
+      if (msg) {
+        if (msg.likes && msg.likes[uid]) {
+          msg.likeCount -= 1;
+          msg.likes[uid] = null;
+        } else {
+          msg.likeCount += 1;
+
+          if (!msg.likes) {
+            msg.likes = {};
+          }
+
+          msg.likes[uid] = true;
+        }
+      }
+      return msg;
+    });
+  }, []);
+
+  const handleDelete = useCallback(
+    async (msgId) => {
+      if (!window.confirm("Delete this message")) {
+        return;
+      }
+
+      const updates = {};
+      const isLast = msgId === messages[messages.length - 1].id;
+      updates[`/messages/${msgId}`] = null;
+
+      if (isLast && messages.length > 1) {
+        updates[`/rooms/${chatId}/lastMessage`] = {
+          ...messages[messages.length - 2],
+          messageId: messages[messages.length - 2].id,
+        };
+      }
+
+      if (isLast && messages.length === 1) {
+        updates[`/rooms/${chatId}/lastMessage`] = null;
+      }
+
+      try {
+        await database.ref().update(updates);
+      } catch (error) {
+        Alert.error(error.message, 4000);
+      }
+    },
+    [chatId, messages]
+  );
+
   return (
     <ul className="msg-list custom-scroll">
       {isEmpty && <li>No Messages yet...</li>}
@@ -58,6 +111,8 @@ const Messages = () => {
             key={msg.id}
             message={msg}
             handleAdmins={handleAdmins}
+            handleLikes={handleLikes}
+            handleDelete={handleDelete}
           />
         ))}
     </ul>
