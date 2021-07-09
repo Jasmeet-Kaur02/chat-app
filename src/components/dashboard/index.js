@@ -2,7 +2,7 @@ import React from "react";
 import { useProfile } from "../../context/profilecontext";
 import { Button, Drawer, Divider, Icon, Alert } from "rsuite";
 import "../../styles/DrawerStyle.scss";
-import EditableInput from "../EditableInput";
+import EditableInput from "./EditableInput";
 import { database } from "../../misc/firebase";
 import AvatarUploadBtn from "./AvatarUploadBtn";
 import { getUpdates } from "../../misc/helperFunctions";

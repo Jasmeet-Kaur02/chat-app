@@ -7,9 +7,10 @@ import { auth } from "../../../misc/firebase";
 import { Button } from "rsuite";
 import { useHover, useMediaQuery } from "../../../misc/custom-hooks";
 import IconBtnControl from "./IconBtnControl";
+import ImgBtnModal from "./ImgBtnModal";
 
 const MessageItems = ({ message, handleAdmins, handleLikes, handleDelete }) => {
-  const { author, createdAt, text, likeCount, likes } = message;
+  const { author, createdAt, text, file, likeCount, likes } = message;
   const [ref, isHovered] = useHover();
   console.log(likeCount);
 
@@ -23,6 +24,19 @@ const MessageItems = ({ message, handleAdmins, handleLikes, handleDelete }) => {
   const isMsgAuthorAdmin = admins.includes(author.uid);
   const isAuthor = auth.currentUser.uid === author.uid;
   const canGrantAcces = isAdmin && !isAuthor;
+
+  const renderFileMsg = (file) => {
+    if (file.contentType.includes("image")) {
+      return (
+        <div className="height-220">
+          <ImgBtnModal src={file.url} name={file.name} />
+        </div>
+      );
+    }
+
+    return <a href={file.url}>Download {file.name}</a>;
+  };
+
   return (
     <li className={`padded mb-1 ${isHovered ? "bg-black-02" : ""}`} ref={ref}>
       <div className="d-flex align-items-center mb-1 font-bolder">
@@ -58,7 +72,8 @@ const MessageItems = ({ message, handleAdmins, handleLikes, handleDelete }) => {
         )}
       </div>
       <div>
-        <span className="word-break-all">{text}</span>
+        {text && <span className="word-break-all">{text}</span>}
+        {file && renderFileMsg(file)}
       </div>
     </li>
   );

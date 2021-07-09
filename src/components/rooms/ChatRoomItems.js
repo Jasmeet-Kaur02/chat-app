@@ -42,7 +42,7 @@ const ChatRoomItems = ({ room }) => {
 
             <div className="text-disappear ml-2">
               <h6 className="italic">{lastMessage.author.name}</h6>
-              <p>{lastMessage.text}</p>
+              <p>{lastMessage.text || lastMessage.file.name}</p>
             </div>
           </>
         ) : (

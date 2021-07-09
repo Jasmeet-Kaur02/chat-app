@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Alert, InputGroup, Input, Icon } from "rsuite";
 import { useParams } from "react-router";
 import { useProfile } from "../../../context/profilecontext";
 import firebase from "firebase/app";
 import { database } from "../../../misc/firebase";
+import AttachmentBtnModal from "./AttachmentBtnModal";
 
 const assembleMessage = (profile, chatId) => {
   return {
@@ -65,9 +66,43 @@ const MessageInput = () => {
     }
   };
 
+  const afterUpload = useCallback(
+    async (files) => {
+      const updates = {};
+
+      files.forEach((file) => {
+        const msgData = assembleMessage(profile, chatId);
+        msgData.file = file;
+
+        const msgId = database.ref("messages").push().key;
+
+        updates[`/messages/${msgId}`] = msgData;
+      });
+
+      const lastMsgId = Object.keys(updates).pop();
+
+      updates[`/rooms/${chatId}/lastMessage`] = {
+        ...updates[lastMsgId],
+        messageId: lastMsgId,
+      };
+
+      setLoading(true);
+
+      try {
+        await database.ref().update(updates);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        Alert.error(err.message, 4000);
+      }
+    },
+    [chatId, profile]
+  );
+
   return (
     <>
       <InputGroup>
+        <AttachmentBtnModal afterUpload={afterUpload} />
         <Input
           placeholder="Write your message here..."
           value={newMessage}

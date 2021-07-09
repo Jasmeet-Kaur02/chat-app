@@ -3,7 +3,7 @@ import EditIcon from "@material-ui/icons/EditOutlined";
 import { Icon, Alert } from "rsuite";
 import { InputBase, FormGroup } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import "../styles/DrawerStyle.scss";
+import "../../styles/DrawerStyle.scss";
 
 const useStyles = makeStyles({
   editBtn: {
