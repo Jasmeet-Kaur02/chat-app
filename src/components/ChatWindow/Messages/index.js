@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { transformToArray } from "../../../misc/helperFunctions";
+import { transformToArray, groupBy } from "../../../misc/helperFunctions";
 import MessageItems from "./MessageItems";
 import { database, auth } from "../../../misc/firebase";
 import "../../../styles/utility.scss";
@@ -102,19 +102,35 @@ const Messages = () => {
     [chatId, messages]
   );
 
+  const renderMessages = () => {
+    const groups = groupBy(messages, (item) => {
+      return new Date(item.createdAt).toDateString();
+    });
+    let items = [];
+
+    Object.keys(groups).forEach((date) => {
+      items.push(<li className="mb-1 text-center padded">{date}</li>);
+
+      const msgs = groups[date].map((msg) => (
+        <MessageItems
+          key={msg.id}
+          message={msg}
+          handleAdmins={handleAdmins}
+          handleLikes={handleLikes}
+          handleDelete={handleDelete}
+        />
+      ));
+
+      items.push(...msgs);
+    });
+
+    return items;
+  };
+
   return (
     <ul className="msg-list custom-scroll">
       {isEmpty && <li>No Messages yet...</li>}
-      {canShowMessages &&
-        messages.map((msg) => (
-          <MessageItems
-            key={msg.id}
-            message={msg}
-            handleAdmins={handleAdmins}
-            handleLikes={handleLikes}
-            handleDelete={handleDelete}
-          />
-        ))}
+      {canShowMessages && renderMessages()}
     </ul>
   );
 };

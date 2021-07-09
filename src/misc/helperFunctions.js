@@ -48,3 +48,17 @@ export const getUpdates = async (updateId, keyToUpdate, newValue, db) => {
 
   return updates;
 };
+
+export const groupBy = (array, groupKeyFn) => {
+  return array.reduce((result, item) => {
+    const groupKey = groupKeyFn(item);
+
+    if (!result[groupKey]) {
+      result[groupKey] = [];
+    }
+
+    result[groupKey].push(item);
+
+    return result;
+  }, {});
+};
