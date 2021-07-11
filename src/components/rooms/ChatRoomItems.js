@@ -1,8 +1,7 @@
 import React from "react";
 import TimeAgo from "timeago-react";
 import { getName } from "../../misc/helperFunctions";
-import { Avatar } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
+import { Avatar, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   avatar: {

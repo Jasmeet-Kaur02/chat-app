@@ -1,7 +1,6 @@
 import React from "react";
 import { Alert, Modal, Button } from "rsuite";
 import { useModalState } from "../../misc/custom-hooks";
-import "../../styles/DrawerStyle.scss";
 import AvatarEditor from "react-avatar-editor";
 import { storage, database } from "../../misc/firebase";
 import { useProfile } from "../../context/profilecontext";

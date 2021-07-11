@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid, Row, Col } from "rsuite";
 import Sidebar from "../../components/Sidebar";
-import "../../styles/DrawerStyle.scss";
 import { RoomsProvider } from "../../context/roomsContext";
 import Chat from "./Chat";
 import { Switch, Route, useRouteMatch } from "react-router-dom";

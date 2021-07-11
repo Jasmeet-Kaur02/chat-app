@@ -1,9 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import EditIcon from "@material-ui/icons/EditOutlined";
 import { Icon, Alert } from "rsuite";
-import { InputBase, FormGroup } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import "../../styles/DrawerStyle.scss";
+import { InputBase, FormGroup, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   editBtn: {
@@ -21,7 +19,9 @@ const useStyles = makeStyles({
 
 const EditableInput = ({ initialValue, onSave, label }) => {
   const classes = useStyles();
+
   const [value, setValue] = React.useState(initialValue);
+
   const [isEditable, setEditable] = React.useState(false);
 
   const inputChange = (e) => {
@@ -47,7 +47,7 @@ const EditableInput = ({ initialValue, onSave, label }) => {
   };
   return (
     <>
-      <div className="inputLabel">
+      <div className="d-flex font-20">
         <label>{label}</label>
         <EditIcon
           className={classes.editBtn}
@@ -77,7 +77,7 @@ const EditableInput = ({ initialValue, onSave, label }) => {
   );
 };
 
-export default EditableInput;
+export default memo(EditableInput);
 
 const closeBtn = {
   //backgroundColor: "#f1f1f1",

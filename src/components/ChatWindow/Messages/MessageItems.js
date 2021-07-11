@@ -12,7 +12,6 @@ import ImgBtnModal from "./ImgBtnModal";
 const MessageItems = ({ message, handleAdmins, handleLikes, handleDelete }) => {
   const { author, createdAt, text, file, likeCount, likes } = message;
   const [ref, isHovered] = useHover();
-  console.log(likeCount);
 
   const isLiked = likes && Object.keys(likes).includes(auth.currentUser.uid);
   const isMobile = useMediaQuery("(max-width: 992px)");

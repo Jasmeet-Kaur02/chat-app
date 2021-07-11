@@ -131,7 +131,7 @@ $indent_4: 30px;
   white-space: nowrap;
 }
 
-.br-circle {
+.circle {
   border-radius: 50%;
 }
 
@@ -141,6 +141,10 @@ $indent_4: 30px;
 
 .font-normal {
   font-weight: 400;
+}
+
+.font-20 {
+  font-size: 20px;
 }
 
 .italic {
@@ -255,4 +259,8 @@ $indent_4: 30px;
 
 .pb-3 {
   padding-bottom: $indent_3;
+}
+
+.pr-1 {
+  padding-right: $indent_1;
 }

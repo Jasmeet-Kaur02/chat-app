@@ -10,7 +10,6 @@ import {
   Alert,
   Modal,
 } from "rsuite";
-import "../styles/DrawerStyle.scss";
 import { useModalState } from "../misc/custom-hooks";
 import { database, auth } from "../misc/firebase";
 import firebase from "firebase/app";

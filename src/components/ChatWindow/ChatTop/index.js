@@ -2,8 +2,7 @@ import React, { memo } from "react";
 import { useCurrentRoom } from "../../../context/currentRoomContext";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "../../../misc/custom-hooks";
-import { Icon, Button } from "rsuite";
-import "../../../styles/utility.scss";
+import { Icon } from "rsuite";
 import RoomInfoBtnModal from "./RoomInfoBtnModal";
 import EditRoomBtnDrawer from "./EditRoomBtnDrawer";
 
@@ -14,7 +13,7 @@ const ChatTop = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center">
+      <div className="d-flex justify-content-between align-items-center pr-1">
         <h4 className="text-disappear d-flex align-items-center">
           <span className={isMobile ? "d-inline-block p-0 mr-2" : "d-none"}>
             <Icon
@@ -31,8 +30,7 @@ const ChatTop = () => {
         {isAdmin && <EditRoomBtnDrawer />}
       </div>
 
-      <div className="d-flex justify-content-between align-items-center">
-        <Button className="px-0">todo</Button>
+      <div>
         <RoomInfoBtnModal />
       </div>
     </>

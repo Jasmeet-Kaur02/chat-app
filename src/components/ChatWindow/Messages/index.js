@@ -4,29 +4,65 @@ import { transformToArray, groupBy } from "../../../misc/helperFunctions";
 import MessageItems from "./MessageItems";
 import { database, auth } from "../../../misc/firebase";
 import "../../../styles/utility.scss";
-import { Alert } from "rsuite";
+import { Alert, Button } from "rsuite";
+
+const Page_Size = 15;
+const msgRef = database.ref("messages");
 
 const Messages = () => {
   const [messages, setMessages] = React.useState(null);
+
+  const [limit, setLimit] = React.useState(Page_Size);
+
+  const selfRef = React.useRef();
+
   const { chatId } = useParams();
   const isEmpty = messages && messages.length === 0;
   const canShowMessages = messages && messages.length > 0;
 
-  useEffect(() => {
-    const msgRef = database.ref("messages");
-    msgRef
-      .orderByChild("roomId")
-      .equalTo(chatId)
-      .on("value", (snap) => {
-        const data = transformToArray(snap.val());
+  const loadMessages = useCallback(
+    async (limitToLast) => {
+      msgRef.off();
 
-        setMessages(data);
-      });
+      msgRef
+        .orderByChild("roomId")
+        .equalTo(chatId)
+        .limitToLast(limitToLast || Page_Size)
+        .on("value", (snap) => {
+          const data = transformToArray(snap.val());
+
+          setMessages(data);
+        });
+
+      setLimit((p) => p + Page_Size);
+    },
+    [chatId]
+  );
+
+  useEffect(() => {
+    const node = selfRef.current;
+
+    loadMessages();
+    setTimeout(() => {
+      node.scrollTop = node.scrollHeight;
+    }, 1000);
 
     return () => {
       msgRef.off("value");
     };
-  }, [chatId]);
+  }, [loadMessages]);
+
+  const onLoadMore = useCallback(() => {
+    const node = selfRef.current;
+    const oldHeight = node.scrollHeight;
+
+    loadMessages(limit);
+
+    setTimeout(() => {
+      const newHeight = node.scrollHeight;
+      node.scrollTop = newHeight - oldHeight;
+    }, 1000);
+  }, [loadMessages, limit]);
 
   const handleAdmins = useCallback(
     async (uid) => {
@@ -128,7 +164,14 @@ const Messages = () => {
   };
 
   return (
-    <ul className="msg-list custom-scroll">
+    <ul className="msg-list custom-scroll" ref={selfRef}>
+      {messages && messages.length >= Page_Size && (
+        <li className="text-center mt-2 mb-2">
+          <Button color="green" onClick={onLoadMore}>
+            Load More
+          </Button>
+        </li>
+      )}
       {isEmpty && <li>No Messages yet...</li>}
       {canShowMessages && renderMessages()}
     </ul>

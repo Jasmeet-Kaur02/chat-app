@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, memo } from "react";
 import {
   Button,
   Drawer,
@@ -104,7 +104,7 @@ const EditRoomBtnDrawer = () => {
           </Form>
         </Drawer.Body>
         <Drawer.Footer>
-          <div className="mb-4">
+          <div className="mb-3">
             <Button block color="blue" onClick={onSave} disabled={isLoading}>
               Edit
             </Button>
@@ -115,4 +115,4 @@ const EditRoomBtnDrawer = () => {
   );
 };
 
-export default EditRoomBtnDrawer;
+export default memo(EditRoomBtnDrawer);
